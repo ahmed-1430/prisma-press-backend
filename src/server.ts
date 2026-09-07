@@ -1,7 +1,8 @@
 import app from "./app";
+import config from "./config";
 import { db as prisma } from "./prisma/db";
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.PORT;
 async function main() {
     try {
         await prisma.orm.public.User.where({ id: -1 }).first();
