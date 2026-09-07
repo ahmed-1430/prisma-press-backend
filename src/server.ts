@@ -1,12 +1,16 @@
-import express, { type Express, type Request, type Response } from 'express';
+import app from "./app";
 
-const app: Express = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
+async function main() {
+    try {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
-});
+    } catch (error) {
+        console.error("Error starting server:", error);
+        process.exit(1);
+    }
+}
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+main();
