@@ -1,0 +1,16 @@
+// use prisma-next
+
+model User {
+  id        String    @id @default(uuid())
+  name      VarChar(255)
+  email     VarChar(255)    @unique
+  password  String    
+  activeStatus activeStatus     @default(ACTIVE) 
+  role      role      @default(USER)
+  profile   Profile?
+  createdAt DateTime  @default(now()) 
+  updatedAt temporal.updatedAtString()
+
+  @@map("users")
+}
+

@@ -1,0 +1,5 @@
+{
+  "files.exclude": {
+    "**/src/prisma/.generated/contract.prisma": true
+  }
+}

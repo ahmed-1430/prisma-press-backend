@@ -1,0 +1,13 @@
+// use prisma-next
+
+model Profile {
+  id        String    @id @default(uuid())
+  bio       String?
+  avatarUrl String?
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt temporal.updatedAtString()
+
+  @@map("profiles")
+}
