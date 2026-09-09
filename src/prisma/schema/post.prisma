@@ -2,11 +2,15 @@
 
 model Post {
   id        String       @id @default(uuid())
-  title     String
-  content   String?
+  title     String   @db.VarChar(255)
+  content   String
+  thumbnail String?
+  isFeatured Boolean      @default(false)
+  status    boolean      @default(true)
+  tags      tags[]       @default([])
+  views     Int          @default(0)
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
-  comments  Comment[]
-  createdAt TimestamptzString @default(now())
-  updatedAt temporal.updatedAtString()
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

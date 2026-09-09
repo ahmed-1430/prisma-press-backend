@@ -2,12 +2,12 @@
 
 model Profile {
   id        String    @id @default(uuid())
-  bio       String?
-  avatarUrl String?
-  user      User   @relation(fields: [userId], references: [id])
   userId    String    @unique
+  profilePhoto String?
+  bio       String?
+  user      User   @relation(fields: [userId], references: [id])
   createdAt DateTime  @default(now())
-  updatedAt temporal.updatedAtString()
+  updatedAt DateTime  @updatedAt
 
   @@map("profiles")
 }

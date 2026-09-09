@@ -8,3 +8,16 @@ enum role {
   AUTHOR
   ADMIN
 }
+
+enum tags {
+  TECHNOLOGY
+  LIFESTYLE
+  TRAVEL
+  FOOD
+  FASHION
+  BUSINESS
+  ENTERTAINMENT
+  SPORTS
+  HEALTH
+  POLITICS
+}
