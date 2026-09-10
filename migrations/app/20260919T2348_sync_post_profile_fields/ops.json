@@ -1,0 +1,296 @@
+[
+  {
+    "id": "column.public.post.isFeatured",
+    "label": "Add column \"isFeatured\" to \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "isFeatured",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"isFeatured\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "isFeatured"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"isFeatured\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD COLUMN \"isFeatured\" bool DEFAULT false NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"isFeatured\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "isFeatured"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.post.status",
+    "label": "Add column \"status\" to \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "status",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"status\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "status"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"status\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD COLUMN \"status\" bool DEFAULT true NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"status\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "status"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.post.tags",
+    "label": "Add column \"tags\" to \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "tags",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"tags\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "tags"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"tags\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD COLUMN \"tags\" text[]"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"tags\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "tags"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.post.thumbnail",
+    "label": "Add column \"thumbnail\" to \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "thumbnail",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"thumbnail\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "thumbnail"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"thumbnail\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD COLUMN \"thumbnail\" text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"thumbnail\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "thumbnail"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "column.public.post.views",
+    "label": "Add column \"views\" to \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "views",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"views\" is missing",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "views"
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add column \"views\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD COLUMN \"views\" int4 DEFAULT 0 NOT NULL"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"views\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "post",
+          "views"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "checkConstraint.post.post_tags_check_dcc99e44",
+    "label": "Add check constraint \"post_tags_check_dcc99e44\" on \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "post_tags_check_dcc99e44",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"post_tags_check_dcc99e44\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_tags_check_dcc99e44",
+          "public",
+          "\"public\".\"post\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add check constraint \"post_tags_check_dcc99e44\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD CONSTRAINT \"post_tags_check_dcc99e44\" CHECK (\"tags\"::text[] <@ ARRAY['TECHNOLOGY', 'LIFESTYLE', 'TRAVEL', 'FOOD', 'FASHION', 'BUSINESS', 'ENTERTAINMENT', 'SPORTS', 'HEALTH', 'POLITICS']::text[])"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"post_tags_check_dcc99e44\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_tags_check_dcc99e44",
+          "public",
+          "\"public\".\"post\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "checkConstraint.post.post_tags_elem_not_null_aecbe9e2",
+    "label": "Add check constraint \"post_tags_elem_not_null_aecbe9e2\" on \"post\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "checkConstraint",
+        "name": "post_tags_elem_not_null_aecbe9e2",
+        "table": "post"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"post_tags_elem_not_null_aecbe9e2\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_tags_elem_not_null_aecbe9e2",
+          "public",
+          "\"public\".\"post\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add check constraint \"post_tags_elem_not_null_aecbe9e2\"",
+        "sql": "ALTER TABLE \"public\".\"post\" ADD CONSTRAINT \"post_tags_elem_not_null_aecbe9e2\" CHECK (array_position(\"tags\", NULL) IS NULL)"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"post_tags_elem_not_null_aecbe9e2\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "post_tags_elem_not_null_aecbe9e2",
+          "public",
+          "\"public\".\"post\""
+        ]
+      }
+    ]
+  }
+]

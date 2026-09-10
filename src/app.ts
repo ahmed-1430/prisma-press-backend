@@ -20,28 +20,5 @@ app.get("/", (req:Request, res:Response) => {
 }
 )
 
-app.post("/api/user/register", async (req:Request, res:Response) => {
-    const {name, email, password, profilePhoto, } = req.body;
-    // console.log(payload);
-    const isUserExist = await prisma.orm.public.User.where({ email }).first();
-
-    if (isUserExist) {
-        throw new Error("User already exists");
-    }
-    const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds));
-
-    const user = await prisma.orm.public.User.create({
-        data: {
-            name,
-            email,
-            password: hashedPassword,
-            profilePhoto,
-        }
-    });
-
-    res.status(httpStatus.CREATED).json({ message: "User registered successfully" });
-    
-}
-)
 
 export default app;

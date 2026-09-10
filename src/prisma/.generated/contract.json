@@ -54,6 +54,51 @@
                 "value": "ADMIN"
               }
             ]
+          },
+          "tags": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "TECHNOLOGY",
+                "value": "TECHNOLOGY"
+              },
+              {
+                "name": "LIFESTYLE",
+                "value": "LIFESTYLE"
+              },
+              {
+                "name": "TRAVEL",
+                "value": "TRAVEL"
+              },
+              {
+                "name": "FOOD",
+                "value": "FOOD"
+              },
+              {
+                "name": "FASHION",
+                "value": "FASHION"
+              },
+              {
+                "name": "BUSINESS",
+                "value": "BUSINESS"
+              },
+              {
+                "name": "ENTERTAINMENT",
+                "value": "ENTERTAINMENT"
+              },
+              {
+                "name": "SPORTS",
+                "value": "SPORTS"
+              },
+              {
+                "name": "HEALTH",
+                "value": "HEALTH"
+              },
+              {
+                "name": "POLITICS",
+                "value": "POLITICS"
+              }
+            ]
           }
         },
         "models": {
@@ -76,7 +121,7 @@
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -97,7 +142,7 @@
               "updatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               }
@@ -105,6 +150,7 @@
             "relations": {
               "author": {
                 "cardinality": "N:1",
+                "nullable": false,
                 "on": {
                   "localFields": [
                     "authorId"
@@ -120,6 +166,7 @@
               },
               "post": {
                 "cardinality": "N:1",
+                "nullable": false,
                 "on": {
                   "localFields": [
                     "postId"
@@ -178,12 +225,41 @@
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
               "id": {
                 "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "isFeatured": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/bool@1",
+                  "kind": "scalar"
+                }
+              },
+              "tags": {
+                "many": true,
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "thumbnail": {
+                "nullable": true,
                 "type": {
                   "codecId": "pg/text@1",
                   "kind": "scalar"
@@ -199,7 +275,14 @@
               "updatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "views": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
                   "kind": "scalar"
                 }
               }
@@ -207,6 +290,7 @@
             "relations": {
               "author": {
                 "cardinality": "N:1",
+                "nullable": false,
                 "on": {
                   "localFields": [
                     "authorId"
@@ -217,21 +301,6 @@
                 },
                 "to": {
                   "model": "User",
-                  "namespace": "public"
-                }
-              },
-              "comments": {
-                "cardinality": "1:N",
-                "on": {
-                  "localFields": [
-                    "id"
-                  ],
-                  "targetFields": [
-                    "postId"
-                  ]
-                },
-                "to": {
-                  "model": "Comment",
                   "namespace": "public"
                 }
               }
@@ -250,11 +319,26 @@
                 "id": {
                   "column": "id"
                 },
+                "isFeatured": {
+                  "column": "isFeatured"
+                },
+                "status": {
+                  "column": "status"
+                },
+                "tags": {
+                  "column": "tags"
+                },
+                "thumbnail": {
+                  "column": "thumbnail"
+                },
                 "title": {
                   "column": "title"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
+                },
+                "views": {
+                  "column": "views"
                 }
               },
               "namespaceId": "public",
@@ -294,7 +378,7 @@
               "updatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               },
@@ -309,6 +393,7 @@
             "relations": {
               "user": {
                 "cardinality": "N:1",
+                "nullable": false,
                 "on": {
                   "localFields": [
                     "userId"
@@ -420,7 +505,7 @@
               "updatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "kind": "scalar"
                 }
               }
@@ -428,6 +513,7 @@
             "relations": {
               "profile": {
                 "cardinality": "1:1",
+                "nullable": true,
                 "on": {
                   "localFields": [
                     "id"
@@ -495,7 +581,7 @@
                   "nullable": false
                 },
                 "createdAt": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "default": {
                     "expression": "now()",
                     "kind": "function"
@@ -514,7 +600,7 @@
                   "nullable": false
                 },
                 "updatedAt": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "nativeType": "timestamptz",
                   "nullable": false
                 }
@@ -579,6 +665,18 @@
               "uniques": []
             },
             "post": {
+              "checks": [
+                {
+                  "expression": "\"tags\"::text[] <@ ARRAY['TECHNOLOGY', 'LIFESTYLE', 'TRAVEL', 'FOOD', 'FASHION', 'BUSINESS', 'ENTERTAINMENT', 'SPORTS', 'HEALTH', 'POLITICS']::text[]",
+                  "name": "post_tags_check_dcc99e44",
+                  "prefix": "post_tags_check"
+                },
+                {
+                  "expression": "array_position(\"tags\", NULL) IS NULL",
+                  "name": "post_tags_elem_not_null_aecbe9e2",
+                  "prefix": "post_tags_elem_not_null"
+                }
+              ],
               "columns": {
                 "authorId": {
                   "codecId": "pg/text@1",
@@ -591,7 +689,7 @@
                   "nullable": true
                 },
                 "createdAt": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "default": {
                     "expression": "now()",
                     "kind": "function"
@@ -604,14 +702,58 @@
                   "nativeType": "text",
                   "nullable": false
                 },
+                "isFeatured": {
+                  "codecId": "pg/bool@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": false
+                  },
+                  "nativeType": "bool",
+                  "nullable": false
+                },
+                "status": {
+                  "codecId": "pg/bool@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": true
+                  },
+                  "nativeType": "bool",
+                  "nullable": false
+                },
+                "tags": {
+                  "codecId": "pg/text@1",
+                  "many": true,
+                  "nativeType": "text",
+                  "nullable": true,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "tags",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "thumbnail": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
+                },
                 "title": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
                   "nullable": false
                 },
                 "updatedAt": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "views": {
+                  "codecId": "pg/int4@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": 0
+                  },
+                  "nativeType": "int4",
                   "nullable": false
                 }
               },
@@ -677,7 +819,7 @@
                   "nullable": false
                 },
                 "updatedAt": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "nativeType": "timestamptz",
                   "nullable": false
                 },
@@ -799,7 +941,7 @@
                   }
                 },
                 "updatedAt": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/timestamptz-temporal@1",
                   "nativeType": "timestamptz",
                   "nullable": false
                 }
@@ -835,6 +977,21 @@
                 "AUTHOR",
                 "ADMIN"
               ]
+            },
+            "tags": {
+              "kind": "valueSet",
+              "values": [
+                "TECHNOLOGY",
+                "LIFESTYLE",
+                "TRAVEL",
+                "FOOD",
+                "FASHION",
+                "BUSINESS",
+                "ENTERTAINMENT",
+                "SPORTS",
+                "HEALTH",
+                "POLITICS"
+              ]
             }
           }
         },
@@ -842,10 +999,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "53a194776ea02fe8231fc4481c96a89b8e8d1a42237f1b5183237e13966e2f76"
+    "storageHash": "a40ed268abcc5dcf828ad3a7b53dda7bbdb8ca60508ed04ce9b280f161406dca"
   },
   "execution": {
-    "executionHash": "aa8653757942f54bc4ee2db0120b49579b25a7af87dbfcad13572690ee1723c4",
+    "executionHash": "fd51472301040e8ec3fd116e261291ae2d17d1f362865efcab55aba577fbf29f",
     "mutations": {
       "defaults": [
         {
@@ -861,11 +1018,11 @@
         },
         {
           "onCreate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "onUpdate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "ref": {
@@ -887,11 +1044,11 @@
         },
         {
           "onCreate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "onUpdate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "ref": {
@@ -913,11 +1070,11 @@
         },
         {
           "onCreate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "onUpdate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "ref": {
@@ -939,11 +1096,11 @@
         },
         {
           "onCreate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "onUpdate": {
-            "id": "timestampNow",
+            "id": "instantNow",
             "kind": "generator"
           },
           "ref": {
