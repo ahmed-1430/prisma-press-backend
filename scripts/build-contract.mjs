@@ -10,9 +10,9 @@ const files = (await readdir(modelsDirectory))
 const schemas = await Promise.all(
   files.map(async (file) => {
     const schema = await readFile(join(modelsDirectory, file), 'utf8');
-    return schema.replace(/^\/\/ use prisma-next\s*/m, '');
+    return schema.replace(/^\/\/ use prisma-(?:next|8)\s*/m, '');
   }),
 );
 
 await mkdir(generatedDirectory, { recursive: true });
-await writeFile(join(generatedDirectory, 'contract.prisma'), `// use prisma-next\n\n${schemas.join('\n\n')}`, 'utf8');
+await writeFile(join(generatedDirectory, 'contract.prisma'), `// use prisma-8\n\n${schemas.join('\n\n')}`, 'utf8');
