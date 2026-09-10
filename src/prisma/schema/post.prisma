@@ -1,16 +1,16 @@
-// use prisma-next
+// use prisma-8
 
 model Post {
-  id        String       @id @default(uuid())
-  title     String   @db.VarChar(255)
-  content   String
+  id        String    @id @default(uuid())
+  title     String
+  content   String?
   thumbnail String?
-  isFeatured Boolean      @default(false)
-  status    boolean      @default(true)
-  tags      tags[]       @default([])
-  views     Int          @default(0)
+  isFeatured Boolean   @default(false)
+  status    Boolean   @default(true)
+  views     Int       @default(0)
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tags      tags[]?
+  createdAt DateTime  @default(now())
+  updatedAt temporal.updatedAt()
 }
