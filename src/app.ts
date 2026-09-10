@@ -21,4 +21,35 @@ app.get("/", (req:Request, res:Response) => {
 )
 
 
+app.post("/api/user/register", async (req:Request, res:Response) => {
+    const {name, email, password, profilePhoto, } = req.body;
+    // console.log(payload);
+    const isUserExist = await prisma.orm.public.User.where({ email }).first();
+
+    if (isUserExist) {
+        throw new Error("User already exists");
+    }
+    const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds));
+
+    await prisma.transaction(async (tx) => {
+        const user = await tx.orm.public.User.create({
+            name,
+            email,
+            password: hashedPassword,
+        });
+
+        if (profilePhoto) {
+            await tx.orm.public.Profile.create({
+                userId: user.id,
+                avatarUrl: profilePhoto,
+            });
+        }
+    });
+
+    res.status(httpStatus.CREATED).json({ message: "User registered successfully" });
+    
+}
+)
+
+
 export default app;
