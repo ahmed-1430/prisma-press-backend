@@ -1,4 +1,4 @@
-// use prisma-next
+// use prisma-8
 
 model Comment {
   id        String               @id @default(uuid())
@@ -8,5 +8,5 @@ model Comment {
   post      Post              @relation(fields: [postId], references: [id])
   postId    String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt temporal.updatedAt()
 }
