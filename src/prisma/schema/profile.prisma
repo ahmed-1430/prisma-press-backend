@@ -1,13 +1,13 @@
-// use prisma-next
+// use prisma-8
 
 model Profile {
   id        String    @id @default(uuid())
   userId    String    @unique
-  profilePhoto String?
+  avatarUrl String?
   bio       String?
   user      User   @relation(fields: [userId], references: [id])
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  updatedAt temporal.updatedAt()
 
   @@map("profiles")
 }
