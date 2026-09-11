@@ -1,5 +1,5 @@
 import cookieParser from "cookie-parser";
-import express, {Application, Request, Response} from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import config from "./config";
 import httpStatus from "http-status";
@@ -15,14 +15,14 @@ app.use(cors({
     origin: config.app_url,
 }));
 
-app.get("/", (req:Request, res:Response) => {
-    res.send("Hello World!" );
+app.get("/", (req: Request, res: Response) => {
+    res.send("Hello World!");
 }
 )
 
 
-app.post("/api/user/register", async (req:Request, res:Response) => {
-    const {name, email, password, profilePhoto, } = req.body;
+app.post("/api/user/register", async (req: Request, res: Response) => {
+    const { name, email, password, profilePhoto, } = req.body;
     // console.log(payload);
     const isUserExist = await prisma.orm.public.User.where({ email }).first();
 
@@ -31,23 +31,32 @@ app.post("/api/user/register", async (req:Request, res:Response) => {
     }
     const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds));
 
-    await prisma.transaction(async (tx) => {
-        const user = await tx.orm.public.User.create({
+    const createdUser = await prisma.transaction(async (tx) => {
+        const createdUser = await tx.orm.public.User.create({
             name,
             email,
             password: hashedPassword,
         });
 
-        if (profilePhoto) {
-            await tx.orm.public.Profile.create({
-                userId: user.id,
-                avatarUrl: profilePhoto,
-            });
-        }
-    });
+        await tx.orm.public.Profile.create({
+            userId: createdUser.id,
+            avatarUrl: profilePhoto,
+        });
 
-    res.status(httpStatus.CREATED).json({ message: "User registered successfully" });
-    
+                return createdUser;
+    });
+    const user = await prisma.orm.public.User
+        .where({ email: createdUser.email, id: createdUser.id })
+        .first();
+
+    res.status(httpStatus.CREATED).json({
+        success: true,
+        statusCode: httpStatus.CREATED,
+        message: "User registered successfully",
+        data: {
+            user               
+        }});
+
 }
 )
 
